@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import fetchJsonp from 'fetch-jsonp';
 import Track from './Track';
+import FavService from '../FavService';
 
 function Home(props) {
 
@@ -35,6 +36,11 @@ function Home(props) {
             });
     }
 
+    function onFavorites(music){
+        FavService.toggleFavorite(music);
+        setMusics([...musics]);
+    }
+    
     return (
         <main className="container mt-3">
             <h1>Recherche</h1>
@@ -69,7 +75,8 @@ function Home(props) {
             }>
                 {musics.map(music => {
                     return (
-                        <Track key={music.id} music={music} />
+                        <Track key={music.id} music={music}  onClick={onFavorites}
+                        isFavorite={FavService.isFavorite(music)}/>
                     );
                 })}
 
